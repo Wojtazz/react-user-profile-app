@@ -9,10 +9,18 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    height: 50px;
+    width: 150px;
+    float: left;
   }
 }
-
+.header {
+  text-align: right;
+}
+.Form-width {
+  max-width: 600px;
+  margin:0 auto
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -27,6 +35,10 @@
 .App-link {
   color: #61dafb;
 }
+.header {
+  text-align: right;
+}
+
 
 @keyframes App-logo-spin {
   from {
