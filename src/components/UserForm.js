@@ -10,9 +10,22 @@ import Form, {
 
 import Button from "@atlaskit/button";
 import TextField from "@atlaskit/textfield";
+import TextArea from "@atlaskit/textarea";
 import { DatePicker } from "@atlaskit/datetime-picker";
+import Select from "@atlaskit/select";
 
+const handleSubmit = (data) => {
+  //console.log(data);
+};
+const gender = [
+  { label: "Male", value: "Male" },
+  { label: "Female", value: "Female" },
+];
 class UserForm extends Component {
+    state = {
+        toDashboard: false,
+      }
+
   validateUsername = (value) => {
     if (value.length < 5) {
       return "TOO_SHORT";
@@ -24,7 +37,7 @@ class UserForm extends Component {
       return "TOO_SHORT";
     }
     if (/[^a-zA-Z]/.test(value)) {
-      return "INVALID";
+      return "INVALID_NAME";
     }
     return undefined;
   };
@@ -34,10 +47,35 @@ class UserForm extends Component {
     }
     return undefined;
   };
+  validatePhone = (value) => {
+    if (value.length !== 9) {
+      return "PHONE_LENGTH";
+    }
+    if (!/^[0-9]+$/.test(value)) {
+      return "PHONE_INVALID";
+    }
+    return undefined;
+  };
+  validateBirthdate = (value) => {
+    if (value.length === 0) {
+      return "EMPTY";
+    }
+    return undefined;
+  };
+  validateSelect = (value) => {
+    if (value === null || value.length === 0) {
+      return "EMPTY";
+    }
+    return undefined;
+  };
   render() {
     return (
       <div className="Form-width">
-        <Form onSubmit={this.handleSubmit}>
+        <Form
+          onSubmit={(data) => {
+            handleSubmit(data);
+          }}
+        >
           {({ formProps }) => (
             <form {...formProps}>
               <Field
@@ -57,7 +95,7 @@ class UserForm extends Component {
                     )}
                     {!error && valid && (
                       <ValidMessage>
-                        Nice one, this username is valid
+                        This Username is valid
                       </ValidMessage>
                     )}
                     {error === "TOO_SHORT" && (
@@ -80,23 +118,23 @@ class UserForm extends Component {
                     <TextField {...fieldProps} />
                     {!error && !valid && (
                       <HelperMessage>
-                        Please enter your First name, should be without Polish
+                        Please enter your first name, should be without Polish
                         letters
                       </HelperMessage>
                     )}
                     {!error && valid && (
                       <ValidMessage>
-                        Nice one, this First Name is valid
+                        This first Name is valid
                       </ValidMessage>
                     )}
                     {error === "TOO_SHORT" && (
                       <ErrorMessage>
-                        Invalid username, needs to be more than 2 characters
+                        Invalid first name, needs to be more than 2 characters
                       </ErrorMessage>
                     )}
-                    {error === "INVALID" && (
+                    {error === "INVALID_NAME" && (
                       <ErrorMessage>
-                        Invalid First name, use only letters (English alphabeth)
+                        Invalid first name, use only letters (English alphabeth)
                       </ErrorMessage>
                     )}
                   </Fragment>
@@ -114,17 +152,17 @@ class UserForm extends Component {
                     <TextField {...fieldProps} />
                     {!error && !valid && (
                       <HelperMessage>
-                        Please enter username, should be without Polish letters
+                        Please enter your last name, should be without Polish letters
                       </HelperMessage>
                     )}
                     {!error && valid && (
                       <ValidMessage>
-                        Nice one, this Last Name is valid
+                       This last Name is valid
                       </ValidMessage>
                     )}
-                    {error === "INVALID" && (
+                    {error === "INVALID_NAME" && (
                       <ErrorMessage>
-                        Invalid Last name, use only letters (English alphabeth)
+                        Invalid last name, use only letters (English alphabeth)
                       </ErrorMessage>
                     )}
                   </Fragment>
@@ -141,10 +179,10 @@ class UserForm extends Component {
                   <Fragment>
                     <TextField {...fieldProps} />
                     {!error && !valid && (
-                      <HelperMessage>Must contain @ symbol</HelperMessage>
+                      <HelperMessage>Please enter email, must contain @ symbol</HelperMessage>
                     )}
                     {!error && valid && (
-                      <ValidMessage>Email is valid</ValidMessage>
+                      <ValidMessage>This email is valid</ValidMessage>
                     )}
                     {error === "INVALID_EMAIL" && (
                       <ErrorMessage>
@@ -155,24 +193,95 @@ class UserForm extends Component {
                 )}
               </Field>
               <Field
-                name="DOB"
-                label="Date of Birth"
+                name="birthdate"
+                label="Birthdate"
                 defaultValue=""
+                validate={this.validateBirthdate}
                 isRequired
               >
-                {({ fieldProps, error }) => (
+                {({ fieldProps, error, valid }) => (
                   <Fragment>
                     <DatePicker
-                      validationState={error ? "error" : "none"}
                       {...fieldProps}
                     />
-                    {error && <ErrorMessage>{error}</ErrorMessage>}
+                    {!error && !valid && (
+                      <HelperMessage>Please choose your birthdate</HelperMessage>
+                    )}
+                    {error === "EMPTY" && (
+                      <ErrorMessage>
+                        This birthday is empty, choose birthdate
+                      </ErrorMessage>
+                    )}
                   </Fragment>
                 )}
               </Field>
+              <Field
+                name="phone"
+                label="Phone"
+                defaultValue=""
+                isRequired
+                validate={this.validatePhone}
+              >
+                {({ fieldProps, error, valid }) => (
+                  <Fragment>
+                    <TextField {...fieldProps} />
+                    {!error && !valid && (
+                      <HelperMessage>
+                        Must contain only digits (9 digits)
+                      </HelperMessage>
+                    )}
+                    {!error && valid && (
+                      <ValidMessage>This phone is valid</ValidMessage>
+                    )}
+                    {error === "PHONE_LENGTH" && (
+                      <ErrorMessage>
+                        This phone is invalid, need to have 9 digits
+                      </ErrorMessage>
+                    )}
+                    {error === "PHONE_INVALID" && (
+                      <ErrorMessage>
+                        This phone is invalid, need to have only digits
+                      </ErrorMessage>
+                    )}
+                  </Fragment>
+                )}
+              </Field>
+              <Field
+                name="gender"
+                label="Select gender"
+                defaultValue=""
+                isRequired
+                validate={this.validateSelect}
+              >
+                {({ fieldProps: { id, ...rest }, error, valid }) => (
+                  <Fragment>
+                    <Select
+                      inputId={id}
+                      {...rest}
+                      options={gender}
+                      isClearable
+                    />
+                     {!error && !valid && (
+                      <HelperMessage>Please select gender</HelperMessage>
+                    )}
+                    {error === "EMPTY" && (
+                      <ErrorMessage>
+                        This gender is empty, choose gender
+                      </ErrorMessage>
+                    )}
+                  </Fragment>
+                )}
+              </Field>
+              <Field
+                name="imglink"
+                defaultValue=""
+                label="Link to profile img (optional)"
+              >
+                {({ fieldProps }) => <TextArea {...fieldProps} />}
+              </Field>
 
               <FormFooter>
-                <Button type="submit">Next</Button>
+                <Button type="submit">Submit</Button>
               </FormFooter>
             </form>
           )}

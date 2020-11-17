@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 
 class UserProfile extends Component {
+    
   render() {
-    return <div>UserProfile</div>;
+      console.log(this.props)
+    return <div>{this.props}</div>;
   }
 }
 

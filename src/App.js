@@ -21,7 +21,7 @@ function App() {
           testId="topNavigation"
           id="product-navigation"
           skipLinkTitle="Product Navigation"
-          height={80}
+          height={55}
           isFixed={false}
         >
           <PageHeader>
