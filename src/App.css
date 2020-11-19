@@ -31,6 +31,16 @@
 .App-link {
   color: #61dafb;
 }
+
+#footer {
+  position: fixed;
+  height: 30px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+}
+
 .header {
   text-align: right;
 }

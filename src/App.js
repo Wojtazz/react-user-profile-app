@@ -17,28 +17,17 @@ function App() {
   return (
     <div className="App">
       <PageLayout>
-        <TopNavigation
-          id="product-navigation"
-          height={55}
-          isFixed={false}
-        >
+        <TopNavigation id="product-navigation" height={55} isFixed={false}>
           <PageHeader>
             <AtlassianLogo className="App-logo" />
           </PageHeader>
         </TopNavigation>
         <Router>
           <Content testId="content">
-            <LeftSidebar
-              id="space-navigation"
-              isFixed={true}
-              width={125}
-            >
+            <LeftSidebar id="space-navigation" isFixed={true} width={125}>
               <NavigationMenu />
             </LeftSidebar>
-            <Main
-              id="main"
-              isFixed={false}
-            >
+            <Main id="main" isFixed={false}>
               <Switch>
                 <Route exact path="/user" component={UserProfileView}></Route>
                 <Route exact path="/form" component={UserFormView}></Route>
@@ -47,6 +36,10 @@ function App() {
           </Content>
         </Router>
       </PageLayout>
+        <footer id="footer">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </footer>
     </div>
   );
 }
