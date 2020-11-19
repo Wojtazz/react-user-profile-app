@@ -1,22 +1,23 @@
+import "../../index.css";
 import React, { Component } from "react";
-import "../App.css";
 import { withRouter } from "react-router-dom";
 import Textfield from "@atlaskit/textfield";
-import DefaultProfile from "../DefaultProfile.jpg";
+import DefaultProfile from "../../images/DefaultProfile.jpg";
+
 class UserProfile extends Component {
+
   componentDidMount() {
     if (localStorage.getItem("data")) {
       const data = localStorage.getItem("data");
-      console.log(data);
       this.setState(() => ({
         data: JSON.parse(data),
       }));
     }
   }
+
   render() {
     if (this.state !== null && this.state.data !== undefined) {
       const data = this.state.data;
-      console.log(data);
       return (
         <div className="Element-width">
           <h2>User {data.username}</h2>
@@ -36,28 +37,32 @@ class UserProfile extends Component {
             <label htmlFor="userdata">Username</label>
             <Textfield name="userdata" value={data.username} isReadOnly />
             <br />
-            <label htmlFor="userdata">First name</label>
-            <Textfield name="userdata" value={data.firstname} isReadOnly />
+            <label htmlFor="firstname">First name</label>
+            <Textfield name="firstname" value={data.firstname} isReadOnly />
             <br />
-            <label htmlFor="userdata">Last name</label>
-            <Textfield name="userdata" value={data.lastname} isReadOnly />
+            <label htmlFor="lastname">Last name</label>
+            <Textfield name="lastname" value={data.lastname} isReadOnly />
             <br />
-            <label htmlFor="userdata">Email</label>
-            <Textfield name="userdata" value={data.email} isReadOnly />
+            <label htmlFor="email">Email</label>
+            <Textfield name="email" value={data.email} isReadOnly />
             <br />
-            <label htmlFor="userdata">Birthdate</label>
-            <Textfield name="userdata" value={data.birthdate} isReadOnly />
+            <label htmlFor="birthdate">Birthdate</label>
+            <Textfield name="birthdate" value={data.birthdate} isReadOnly />
             <br />
-            <label htmlFor="userdata">Phone</label>
-            <Textfield name="userdata" value={data.phone} isReadOnly />
+            <label htmlFor="phone">Phone</label>
+            <Textfield name="phone" value={data.phone} isReadOnly />
             <br />
-            <label htmlFor="userdata">Gender</label>
-            <Textfield name="userdata" value={data.gender.value} isReadOnly />
+            <label htmlFor="gender">Gender</label>
+            <Textfield name="gender" value={data.gender.value} isReadOnly />
           </div>
         </div>
       );
     } else {
-      return <div>No data here</div>;
+      return (
+        <div>
+          <h4>No data here</h4>
+        </div>
+      );
     }
   }
 }

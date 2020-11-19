@@ -17,11 +17,6 @@
 .header {
   text-align: right;
 }
-.Element-width {
-  max-width: 500px;
-  margin:0 auto;
-  text-align: left;
-}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
