@@ -10,9 +10,8 @@ import {
 } from "@atlaskit/page-layout";
 import { MenuGroup, Section, ButtonItem } from "@atlaskit/menu";
 import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
-import logo from "./ReactLogo.png";
 import PageHeader from "@atlaskit/page-header";
-
+import { AtlassianLogo } from '@atlaskit/logo';
 function App() {
   return (
     <div className="App">
@@ -25,8 +24,8 @@ function App() {
           isFixed={false}
         >
           <PageHeader>
-            <img src={logo} className="App-logo" alt="logo" />
-          </PageHeader>
+            <AtlassianLogo className="App-logo"/>
+         </PageHeader>
         </TopNavigation>
         <Router>
           <Content testId="content">
@@ -38,12 +37,11 @@ function App() {
               width={125}
             >
               <MenuGroup>
-                <Section title="Starred">
+                <Section title="Main menu">
                   <Link to="/user">
                     <ButtonItem>User Profile</ButtonItem>
                   </Link>
                 </Section>
-                ,
                 <Section hasSeparator>
                   <Link to="/form">
                     <ButtonItem>User Form</ButtonItem>
@@ -58,11 +56,10 @@ function App() {
               isFixed={false}
             >
               <Switch>
-                <Route path="/user">
-                  <UserProfileView />
+                <Route exact path="/user" component={UserProfileView}>
+                  
                 </Route>
-                <Route path="/form">
-                  <UserFormView />
+                <Route exact path="/form" component={UserFormView}>
                 </Route>
               </Switch>
             </Main>

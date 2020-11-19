@@ -13,19 +13,17 @@ import TextField from "@atlaskit/textfield";
 import TextArea from "@atlaskit/textarea";
 import { DatePicker } from "@atlaskit/datetime-picker";
 import Select from "@atlaskit/select";
-
-const handleSubmit = (data) => {
-  //console.log(data);
-};
+import { withRouter } from 'react-router-dom'   
+ 
 const gender = [
   { label: "Male", value: "Male" },
   { label: "Female", value: "Female" },
 ];
 class UserForm extends Component {
     state = {
-        toDashboard: false,
+        direct: false,
       }
-
+      
   validateUsername = (value) => {
     if (value.length < 5) {
       return "TOO_SHORT";
@@ -68,9 +66,27 @@ class UserForm extends Component {
     }
     return undefined;
   };
+  restrictExtension = (value) => {
+    if(value.length !== 0 && value.substr(value.lastIndexOf('.') + 1) !== "jpg") {
+      return "INVALID_EXTENSION"
+    }
+    return undefined;
+  }
   render() {
-    return (
-      <div className="Form-width">
+    const { history } = this.props
+    if(this.state.direct === true) {
+        //history.push({pathname:'/user', state: this.state})
+        history.push('/user')
+    }
+    const handleSubmit = (data) => {
+        this.setState(() => ({
+            direct: true,
+          }))
+        localStorage.setItem("data", JSON.stringify(data))
+      };
+
+    return (  
+      <div className="Element-width">
         <Form
           onSubmit={(data) => {
             handleSubmit(data);
@@ -276,8 +292,21 @@ class UserForm extends Component {
                 name="imglink"
                 defaultValue=""
                 label="Link to profile img (optional)"
+                validate={this.restrictExtension}
               >
-                {({ fieldProps }) => <TextArea {...fieldProps} />}
+                {({ fieldProps, error, valid }) => (
+                  <Fragment>
+                    <TextField {...fieldProps} />
+                    {!error && valid && (
+                      <ValidMessage>This field is valid</ValidMessage>
+                    )}
+                    {error === "INVALID_EXTENSION" && (
+                      <ErrorMessage>
+                        This link is invalid, need to be jpg
+                      </ErrorMessage>
+                    )}
+                  </Fragment>
+                )}
               </Field>
 
               <FormFooter>
@@ -291,4 +320,4 @@ class UserForm extends Component {
   }
 }
 
-export default UserForm;
+export default withRouter(UserForm);

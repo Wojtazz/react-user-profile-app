@@ -10,14 +10,14 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     height: 50px;
-    width: 150px;
+    width: 240px;
     float: left;
   }
 }
 .header {
   text-align: right;
 }
-.Form-width {
+.Element-width {
   max-width: 500px;
   margin:0 auto;
   text-align: left;
