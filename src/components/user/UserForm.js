@@ -116,13 +116,13 @@ class UserForm extends Component {
               <Field
                 name="birthdate"
                 label="Birthdate"
-                defaultValue=""
+                defaultValue="1995-03-05"
                 validate={validateBirthdate}
                 isRequired
               >
                 {({ fieldProps, error, valid }) => (
                   <Fragment>
-                    <DatePicker {...fieldProps} value="1995-03-05" />
+                    <DatePicker {...fieldProps} />
                     <ValidationBirthdateMsg error={error} valid={valid} />
                   </Fragment>
                 )}
