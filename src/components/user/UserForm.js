@@ -34,26 +34,21 @@ class UserForm extends Component {
   state = {
     direct: false,
   };
-
-  render() {
+  handleSubmit = (data) => {
     const { history } = this.props;
-    if (this.state.direct === true) {
-      history.push("/user");
-    }
-    const handleSubmit = (data) => {
-      this.setState(() => ({
-        direct: true,
-      }));
-      localStorage.setItem("data", JSON.stringify(data));
-    };
-
+    this.setState(() => ({
+      direct: true,
+    }));
+     //Jeśli podpiety backend mozna wyslac dane w tym miejscu (POST)
+    localStorage.setItem("data", JSON.stringify(data));
+    history.push("/user")
+  };
+  render() {
     return (
       <div className="Element-width">
         <h2>Fill user form with data :)</h2>
         <Form
-          onSubmit={(data) => {
-            handleSubmit(data);
-          }}
+          onSubmit={this.handleSubmit}
         >
           {({ formProps }) => (
             <form {...formProps}>
